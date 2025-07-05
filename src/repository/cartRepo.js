@@ -1,34 +1,37 @@
-let carts = [];
+const cartRepository = {
 
-const getCarts = () => {
-    return carts;
-}
+    carts: [],
 
-const addCart = (cart) => {
-    carts.push(cart);
-}
+    getCarts: () => {
+        return cartRepository.carts;
+    },
 
-const updateCart = (cartId, updatedCart) => {
-    const index = carts.findIndex(cart => cart.id === cartId);
-    if (index !== -1) {
-        carts[index] = { ...carts[index], ...updatedCart };
+    addCart:(cart) => {
+        cartRepository.carts.push(cart);
+    },
+
+    updateCart: (cartId, updatedCart) => {
+        index = cartRepository.carts.findIndex(cart => cart.id === cartId);
+        if (index !== -1) {
+            cartRepository.carts[index] = { ...cartRepository.carts[index], ...updatedCart };
+        }
+    },
+
+    deleteCart: (cartId) => {
+        cartRepository.carts = cartRepository.carts.filter(cart => cart.id !== cartId);
+    },
+
+    getCartById: (cartId) => {
+        return cartRepository.carts.find(cart => cart.id === cartId);
+    },
+
+    getCartByUserId: (userId) => {
+        return cartRepository.carts.filter(cart => cart.userId === userId);
+    },
+
+    clearCart: (userId) => {
+        cartRepository.carts = cartRepository.carts.filter(cart => cart.userId !== userId);
     }
 }
 
-const deleteCart = (cartId) => {
-    carts = carts.filter(cart => cart.id !== cartId);
-}
-
-const getCartById = (cartId) => {
-    return carts.find(cart => cart.id === cartId);
-}
-
-const getCartByUserId = (userId) => {
-    return carts.filter(cart => cart.userId === userId);
-}
-
-const clearCart = (userId) => {
-    carts = carts.filter(cart => cart.userId !== userId);
-}
-
-module.exports = {getCarts, addCart, updateCart, deleteCart, getCartById, getCartByUserId, clearCart};
+export {cartRepository};
